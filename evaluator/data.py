@@ -1,11 +1,10 @@
-import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
 
 class Data:
-  def __init__(self, path):
-    self.data = pd.read_csv(path)
+  def __init__(self, data):
+    self.data = data
 
   def skim_data(self):
     print("columns\n", self.data.columns)
@@ -38,5 +37,10 @@ class Data:
     le = encoder()
     for column in columns:
       self.data[column] = le.fit_transform(self.data[column])
+
+  def transform(self, columns=[], encoder=LabelEncoder):
+    self.encode_string_columns(columns, encoder)
+    self.data = self.data.fillna(0)
+
 
 
